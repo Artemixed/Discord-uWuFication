@@ -1,29 +1,39 @@
-<?php 
+<?php
 
 // arrays with all the words and emotes
-$INPUTowo = ['OwO', 'UwU', 'H-hewwo', 'Hehehe :3', '*Notices bulge*'];
-$INPUTemote = ['🥺', '(❁´◡`❁)', 'OwO', 'Hehehe :3', '☆*: .｡. o(≧▽≦)o .｡.:*☆', ':DDDDDDD', '(✿◕‿◕✿)', '/ᐠ｡ꞈ｡ᐟ', '✍️(◔◡◔)'];
+$inputOwo = ['OwO', 'UwU', 'H-hewwo', 'Hehehe :3', '*Notices bulge*', 'Haiiii!', '<3'];
+$inputEmote = ['🥺', '(❁´◡`❁)', 'OwO', 'Hehehe :3', '☆*: .｡. o(≧▽≦)o .｡.:*☆', ':DDDDDDD', '(✿◕‿◕✿)', '/ᐠ｡ꞈ｡ᐟ', '✍️(◔◡◔)', '(๑•́ ₃ •̀๑)'];
 $pastlink = array();   // array with past links
+
 const sleepTime = 60; // time in seconds to wait between checks
+const errorSleepTime = 240; // time in seconds to wait between errors
 
 // Case insensitive L&R reggex
 $pattern = '/[lr]/i';
+
 while (true) {
-    $content = file_get_contents("http://feeds.nos.nl/nosnieuwsalgemeen"); // Default is National Dutch News (NOS)
 
-    // Instantiate XML element
-    $a = new SimpleXMLElement($content);
+    try {
+        $content = file_get_contents("http://feeds.nos.nl/nosnieuwsalgemeen"); // Default is National Dutch News (NOS)
 
+        // Instantiate XML element
+        $a = new SimpleXMLElement($content);
+    } catch (Exception $e) {
+        echo 'Caught exception: ',  $e->getMessage(), "\n";
+        echo 'retry in ' . errorSleepTime . " seconds \n";
+        sleep(errorSleepTime);
+        continue;
+    }
     // Get clean content from rss feed (Might be different for your RSS feed)
     $link = $a->channel->item->link;
-    
+
     // check if link is already posted 
     if (in_array("$link", $pastlink)) {
         sleep(sleepTime);
         continue;
     }
 
-    $pastlink[] = "$link"; 
+    $pastlink[] = "$link";
 
     $mediaEnclosure = $a->channel->item->enclosure['url']; // Link with photo (Might be different for your RSS feed)
 
@@ -32,8 +42,8 @@ while (true) {
     $CursedTitle = preg_replace($pattern, 'w', $Cleantitle);
 
     // get random word and emote from arrays
-    $emote = $INPUTemote[array_rand($INPUTemote, 1)];
-    $owo = $INPUTowo[array_rand($INPUTowo, 1)];
+    $emote = $inputEmote[array_rand($inputEmote, 1)];
+    $owo = $inputOwo[array_rand($inputOwo, 1)];
 
     // connect to discord webhook
     $webhookurl = "YOUR DISCORD WEBHOOK URL HERE";
@@ -98,8 +108,8 @@ while (true) {
     curl_close($ch);
 
     // done 
-    $result = $owo . " $CursedTitle " . $emote . " " . $link . " $timestamp " ."\n"; 
+    $result = $owo . " $CursedTitle " . $emote . " " . $link . " $timestamp " . "\n";
     file_put_contents("pastMessages.txt", $result, FILE_APPEND); // add result to file
     echo $result; // print result to console
-    sleep(sleepTime); 
+    sleep(sleepTime);
 }
