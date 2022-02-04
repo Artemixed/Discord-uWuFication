@@ -1,12 +1,12 @@
 <?php
 
-// arrays with all the words and emotes
-$inputOwo = ['OwO', 'UwU', 'H-hewwo', 'Hehehe :3', '*Notices bulge*', 'Haiiii!', '<3'];
-$inputEmote = ['🥺', '(❁´◡`❁)', 'OwO', 'Hehehe :3', '☆*: .｡. o(≧▽≦)o .｡.:*☆', ':DDDDDDD', '(✿◕‿◕✿)', '/ᐠ｡ꞈ｡ᐟ', '✍️(◔◡◔)', '(๑•́ ₃ •̀๑)'];
-$pastlink = array();   // array with past links
+// connect to discord webhook
+$webhookurl = "YOUR DISCORD WEBHOOK URL HERE";
 
 const sleepTime = 60; // time in seconds to wait between checks
 const errorSleepTime = 240; // time in seconds to wait between errors
+
+$pastlink = array();   // to prevent duplicate link
 
 // Case insensitive L&R reggex
 $pattern = '/[lr]/i';
@@ -41,12 +41,14 @@ while (true) {
     $Cleantitle =  $a->channel->item->title;
     $CursedTitle = preg_replace($pattern, 'w', $Cleantitle);
 
-    // get random word and emote from arrays
+    $CuteContent = file_get_contents("./assets/content.json");
+    $CuteContent = json_decode($CuteContent, true);
+
+    $inputOwo = $CuteContent['owo']['content'];
+    $inputEmote = $CuteContent['emote']['content'];
+    // get random word and emote from ./assets/content.json file
     $emote = $inputEmote[array_rand($inputEmote, 1)];
     $owo = $inputOwo[array_rand($inputOwo, 1)];
-
-    // connect to discord webhook
-    $webhookurl = "YOUR DISCORD WEBHOOK URL HERE";
 
     $timestamp = date("c", strtotime("now"));
 
