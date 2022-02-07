@@ -11,6 +11,13 @@ $pastlink = array();   // to prevent duplicate link
 // Case insensitive L&R reggex
 $pattern = '/[lr]/i';
 
+function randomFromArray(array $inputArray) {
+    if (gettype($inputArray) != "array"){
+        throw new Exception("Given variable is not an array");
+    }
+    return $inputArray[array_rand($inputArray, 1)];
+}
+
 while (true) {
 
     try {
@@ -44,11 +51,9 @@ while (true) {
     $CuteContent = file_get_contents("./assets/content.json");
     $CuteContent = json_decode($CuteContent, true);
 
-    $inputOwo = $CuteContent['owo']['content'];
-    $inputEmote = $CuteContent['emote']['content'];
     // get random word and emote from ./assets/content.json file
-    $emote = $inputEmote[array_rand($inputEmote, 1)];
-    $owo = $inputOwo[array_rand($inputOwo, 1)];
+    $owo = randomFromArray($CuteContent['owo']);
+    $emote = randomFromArray($CuteContent['emote']);
 
     $timestamp = date("c", strtotime("now"));
 
