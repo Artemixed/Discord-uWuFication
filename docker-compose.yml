@@ -1,0 +1,5 @@
+version: '3.9'
+services:
+  uwu-fication:
+    build: .
+    stop_grace_period: 1s
