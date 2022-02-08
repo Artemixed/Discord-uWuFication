@@ -19,7 +19,6 @@ function randomFromArray(array $inputArray) {
 }
 
 while (true) {
-
     try {
         $content = file_get_contents("http://feeds.nos.nl/nosnieuwsalgemeen"); // Default is National Dutch News (NOS)
 
@@ -48,10 +47,10 @@ while (true) {
     $Cleantitle =  $a->channel->item->title;
     $CursedTitle = preg_replace($pattern, 'w', $Cleantitle);
 
-    $CuteContent = file_get_contents("./assets/content.json");
+    $CuteContent = file_get_contents("assets/content.json");
     $CuteContent = json_decode($CuteContent, true);
 
-    // get random word and emote from ./assets/content.json file
+    // get random word and emote from assets/content.json file
     $owo = randomFromArray($CuteContent['owo']);
     $emote = randomFromArray($CuteContent['emote']);
 
