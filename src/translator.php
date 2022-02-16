@@ -8,8 +8,8 @@ class translator
 {
     /*
     responsible for adding stutter to the article title.
-    This stutter has a 30% chance of occuring on the first word of the title
-    and voids the chance if the first word of the title starts with a illigal character ie " ' " or ' " ' .
+    This stutter has a 30% chance of occurring on the first word of the title
+    and voids the chance if the first word of the title starts with a illegal character ie " ' " or ' " ' .
     */
     public function stutter($str)
     {
@@ -29,14 +29,13 @@ class translator
 
     /*
     responsible for translating the article title into 'uwu speak'.
-    This is simpely done by replacing all occurences of 'r' and 'l' with a 'w' respectively.
+    This is simply done by replacing all occurrences of 'r' and 'l' with a 'w' respectively.
     */
     public function translateToUWU($str)
     {
-        $pattern = '/[lr]/i';
-        $str = preg_replace($pattern, 'w', $str);
-
-        return $str;
+        $patterns = ['/[lr]/', '/[RL]/']; // Should have as many elements as array below
+        $replacements = ['w', 'W']; // Appear within the same order as the patterns above
+        return preg_replace($patterns, $replacements, $str);
     }
 
     /* 
