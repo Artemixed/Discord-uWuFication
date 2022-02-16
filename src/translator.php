@@ -45,7 +45,7 @@ class translator
     private function randomFromArray(array $inputArray)
     {
         if (gettype($inputArray) != "array") {
-            new Exception("Input is not an array");
+            throw new Exception("Input is not an array");
         }
 
         return $inputArray[array_rand($inputArray, 1)];
