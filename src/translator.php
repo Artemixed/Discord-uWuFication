@@ -62,9 +62,7 @@ class translator
         $owo = $this->randomFromArray($content['owo']);
         $emote = $this->randomFromArray($content['emote']);
 
-        $str = $owo . " " . $str . " " . $emote;
-
-        return $str;
+        return $owo . " " . $str . " " . $emote;
     }
 
     /*

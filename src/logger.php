@@ -20,7 +20,7 @@ class logger
     public function logToFile($article)
     {
         $message = date('Y/m/d H:i:s') . " " . $article->title . " " . $article->link . "\n";
-        file_put_contents("./logs/pastMessages.log", $message, FILE_APPEND);
+        file_put_contents("../logs/pastMessages.log", $message, FILE_APPEND);
     }
 
     /*
@@ -29,6 +29,6 @@ class logger
     public function logException($exception)
     {
         $message = date('Y/m/d H:i:s') . " " . $exception->getMessage() . "\n";
-        file_put_contents("./logs/exceptions.log", $message, FILE_APPEND);
+        file_put_contents("../logs/exceptions.log", $message, FILE_APPEND);
     }
 }
