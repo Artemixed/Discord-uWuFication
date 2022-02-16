@@ -9,12 +9,12 @@ include("article.php");
 class newsGetter
 {
 
-    public $lastlink;
-    
+    public $lastlinks;
+
     public function __construct()
     {
 
-        $this->lastlink = "";
+        $this->lastlinks = array();
     }
 
     /*
@@ -33,22 +33,25 @@ class newsGetter
         // create a new article and fill the fields
         $art = new article;
         $art->title = $content->channel->item->title;
-        $art->link = $content->channel->item->link;
+        $art->link = $content->channel->item->link->__toString();
         $art->mediaEnclosure = $content->channel->item->enclosure['url'];
 
-        if ($this->isDuplicate($art)) {
+        if ($this->isDuplicate($art) === true) {
             return false;
         } else {
-            $this->lastlink = $art->link;
+            array_push($this->lastlinks, $art->link);
             return $art;
         }
     }
-    
+
     /*
     checks if the most recent article has already been posted.
     */
     private function isDuplicate($art)
     {
-        return strcmp($art->link, $this->lastlink) == 0;
+        // if the last link is the same as the current link, then it is a duplicate
+        if (in_array($art->link, $this->lastlinks)) {
+            return true;
+        }
     }
 }
