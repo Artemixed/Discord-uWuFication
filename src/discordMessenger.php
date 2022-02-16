@@ -24,7 +24,7 @@ class discordMessenger
 
         $timestamp = date("c", strtotime("now"));
 
-        $json_data = json_encode([
+        $jsonData = json_encode([
             // Username
             "username" => "NoWos NuWus",
 
@@ -71,7 +71,7 @@ class discordMessenger
         $ch = curl_init($this->url);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-type: application/json'));
         curl_setopt($ch, CURLOPT_POST, 1);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
         curl_setopt($ch, CURLOPT_FOLLOWLOCATION, 1);
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
