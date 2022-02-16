@@ -20,8 +20,7 @@ class connectionManager
     public function sendArticle($article)
     {
         foreach ($this->hooks as $hook) {
-            $msgr = new discordMessenger($hook);
-            $msgr->sendArticle($article);
+            (new discordMessenger($hook)) -> sendArticle($article);
         }
     }
 }
