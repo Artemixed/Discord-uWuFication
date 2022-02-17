@@ -39,6 +39,9 @@ class newsGetter
         if ($this->isDuplicate($art) === true) {
             return false;
         } else {
+            if (count($this->lastlinks) > 10) {
+                array_shift($this->lastlinks);
+            }
             array_push($this->lastlinks, $art->link);
             return $art;
         }
