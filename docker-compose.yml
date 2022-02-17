@@ -3,3 +3,5 @@ services:
   uwu-fication:
     build: .
     stop_grace_period: 1s
+    volumes:
+      - ./logs:/etc/uwuFication/logs
