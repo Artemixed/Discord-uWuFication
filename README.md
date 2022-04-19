@@ -5,7 +5,15 @@ Discord-uWuFication is a small discord webhook written in PHP to parse an RSS fe
 - PHP-xml
 - PHP-curl
 
-#### example
+## Running the webhook 
+
+Change the webhook in ```src/run.php``` to your desired webhooks
+```
+$conns->addHook("https://discord.com/api/webhooks/xyz/xyz");
+```
+Run the webhook by using docker or execute the ```run.php``` file found in src/ with PHP
+#
+### example
 ![Example](https://i.imgur.com/T48Mxez.png)
 
 #
